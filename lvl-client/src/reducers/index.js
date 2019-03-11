@@ -1,9 +1,10 @@
-import { FETCH_REQUEST, FETCH_SUCCESS, FETCH_FAILURE } from "../actions";
+import { FETCH_REQUEST, FETCH_SUCCESS, FETCH_FAILURE, LOGIN_START, LOGIN_SUCCESS, LOGIN_FAILURE } from "../actions";
 
 const initialState = {
-    isLoading: false,
+    isLoggingIn: false,
     friends: [],
-    error: null
+    error: null,
+    
 };
 
 
@@ -13,21 +14,21 @@ export const lvlReducer = (state = initialState, action) => {
         case FETCH_REQUEST:
             return {
                 ...state,
-                isLoading: true,
+                isLoggingIn: true,
                 error: "",
             };
         case FETCH_SUCCESS:
             return {
                 ...state,
                 friends: action.payload,
-                isLoading: false,
+                isLoggingIn: false,
                 error: "",
             };
         case FETCH_FAILURE:
             return {
                 ...state,
                 error: action.payload,
-                isLoading: false,
+                isLoggingIn: false,
             };
             
         default:

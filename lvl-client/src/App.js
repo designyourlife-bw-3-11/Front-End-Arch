@@ -18,10 +18,13 @@ class App extends Component {
               <Link to=""> (Public) </Link>
             </li>
             <li>
-              <Link to="/protected"> Protected</Link>
+              <Link to="/protected"> Protected </Link>
             </li>
             <li>
               <Link to="/login"> Log In</Link>
+            </li>
+            <li>
+              <Link to="/register">Register</Link>
             </li>
           </ul>
 

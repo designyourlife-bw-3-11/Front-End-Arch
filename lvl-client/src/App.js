@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <h1> </h1>
+          <h1> LVL  </h1>
 
           <ul>
             <li>
@@ -27,7 +27,7 @@ class App extends Component {
               <Link to="/register">Register</Link>
             </li>
           </ul>
-
+          {/* <Route exact path='/' component={App} /> */}
           <Route path="/login" component={Login} />
           <PrivateRoute exact path="/protected" component={Protected} />
         </div>

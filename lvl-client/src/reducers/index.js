@@ -1,10 +1,10 @@
-import { FETCH_REQUEST, FETCH_SUCCESS, FETCH_FAILURE, LOGIN_START, LOGIN_SUCCESS, LOGIN_FAILURE } from "../actions";
+import { FETCH_REQUEST, FETCH_SUCCESS, FETCH_FAILURE } from "../actions";
 
 const initialState = {
     isLoggingIn: false,
     friends: [],
     error: null,
-    
+
 };
 
 

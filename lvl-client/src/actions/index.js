@@ -14,9 +14,9 @@ export const REGISTER_START = "REGISTER_START";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 
 //----Activity----//
-export const ADD_ACTIVITY_START = "ADD_ACTIVITY_START";
-export const ADD_ACTIVITY_SUCCESS = "ADD_ACTIVITY_SUCCESS";
-export const ADD_ACTIVITY_FAILURE = "ADD_ACTIVITY_FAILURE";
+export const GET_ACTIVITY_START = "GET_ACTIVITY_START";
+export const GET_ACTIVITY_SUCCESS = "GET_ACTIVITY_SUCCESS";
+export const GET_ACTIVITY_FAILURE = "GET_ACTIVITY_FAILURE";
 
 //----Description----//
 export const ADD_DESCRIPTION_REQUEST = "ADD_DESCRIPTION_REQUEST";
@@ -24,14 +24,16 @@ export const ADD_DESCRIPTION_SUCCESS = "ADD_DESCRIPTION_SUCCESS";
 export const ADD_DESCRIPTION_FAILURE = "ADD_DESCRIPTION_FAILURE";
 
 //----Enjoyment----//
-export const ADD_ENJOYMENT_REQUEST = "ADD_ENJOYMENT_REQUEST";
-export const ADD_ENJOYMENT_SUCCESS = "ADD_ENJOYMENT_SUCCESS";
-export const ADD_ENJOYMENT_FAILURE = "ADD_ENJOYMENT_FAILURE";
+export const ADD_ACTIVITY_START = "ADD_ENJOYMENT_START";
+export const ADD_ACTIVITY_SUCCESS = "ADD_ACTIVITY_SUCCESS";
+export const ADD_ACTIVITY_FAILURE = "ADD_ACTIVITY_FAILURE";
 
 //----Results----//
 export const ADD_RESULTS_REQUEST = "ADD_RESULTS_REQUEST";
 export const ADD_RESULTS_SUCCESS = "ADD_RESULTS_SUCCESS";
 export const ADD_RESULTS_FAILURE = "ADD_RESULTS_Failure";
+
+//----- Login Action -----//
 
 export const login = creds => dispatch => {
   dispatch({ type: LOGIN_START });
@@ -48,6 +50,8 @@ export const login = creds => dispatch => {
     });
 };
 
+//----- Get Data Action -----//
+
 export const getData = () => {
   axios
     .get("https://bw-designyourlife-api.herokuapp.com/testDb", {
@@ -60,6 +64,8 @@ export const getData = () => {
       console.log(err);
     });
 };
+
+//----- Register User Action -----//
 
 export const registerUser = creds => dispatch => {
   dispatch({ type: REGISTER_START });
@@ -78,27 +84,42 @@ export const registerUser = creds => dispatch => {
     });
 };
 
+//----- Get Activity Action -----//
+
 export const getActivities = () => dispatch => {
-  dispatch({ type: ADD_ACTIVITY_START });
+  dispatch({ type: GET_ACTIVITY_START });
   axios
     .get("https://bw-designyourlife-api.herokuapp.com/api/activities/username")
     .then(res => {
       dispatch({
-        type: ADD_ACTIVITY_SUCCESS,
+        type: GET_ACTIVITY_SUCCESS,
         payload: res.data
       });
     })
     .catch(err => {
       dispatch({
-        type: ADD_ACTIVITY_FAILURE,
+        type: GET_ACTIVITY_FAILURE,
         payload: err.response
       });
     });
 };
 
-export const addActivity = newActivity => {
-  return {
-    type: ADD_ACTIVITY_START,
-    payload: newActivity
-  };
+//----- Add Activity Action-----//
+
+export const addActivity = newActivity => dispatch => {
+  dispatch({ type: ADD_ACTIVITY_START });
+  axios
+    .get("https://bw-designyourlife-api.herokuapp.com/api/activities")
+    .then(res => {
+      dispatch({
+        type: ADD_ACTIVITY_SUCCESS,
+        payload: newActivity
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: ADD_ACTIVITY_FAILURE,
+        error: err.response
+      });
+    });
 };

@@ -8,16 +8,17 @@ import {
   //   ADD_DESCRIPTION_SUCCESS,
   //   ADD_ENJOYMENT,
   //   ADD_RESULTS,
-  ADD_ACTIVITY_START,
-  ADD_ACTIVITY_SUCCESS,
-  ADD_ACTIVITY_FAILURE
+  GET_ACTIVITY_START,
+  GET_ACTIVITY_SUCCESS,
+  GET_ACTIVITY_FAILURE
 } from "../actions";
 
 const initialState = {
   isLoggingIn: false,
   activities: [],
   error: null,
-  isRegistering: false
+  isRegistering: false,
+  addingActivity: false
 };
 
 const lvlReducer = (state = initialState, action) => {
@@ -60,19 +61,20 @@ const lvlReducer = (state = initialState, action) => {
         isRegistering: false
       };
 
-    case ADD_ACTIVITY_START:
+    case GET_ACTIVITY_START:
       return {
         ...state,
         error: null,
         addingActivity: true
       };
-    case ADD_ACTIVITY_SUCCESS:
+    case GET_ACTIVITY_SUCCESS:
+      console.log(action.payload);
       return {
         ...state,
         activities: action.payload,
         addingActivity: false
       };
-    case ADD_ACTIVITY_FAILURE:
+    case GET_ACTIVITY_FAILURE:
       return {
         ...state,
         error: action.payload,

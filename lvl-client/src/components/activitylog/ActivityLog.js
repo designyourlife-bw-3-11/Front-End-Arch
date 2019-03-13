@@ -12,16 +12,20 @@ class activityLog extends Component {
 
   componentDidMount = () => {
     this.props.getActivities();
+    console.log(this.props.getActivities());
     // this.setState({ activities: activities });
   };
 
   handleFormChanges = e => {
     e.preventDefault();
-    this.setState({ [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   };
 
   handleAddActivity = e => {
+    const { description, results, enjoyment } = this.state;
     e.preventDefault();
+    this.props.addActivity({ description, results, enjoyment });
 
     // const newActivity = {
     //   description: this.state.description,
@@ -47,8 +51,7 @@ class activityLog extends Component {
         console.log(activity);
         return (
           <option value={activity.name} key={activity.id}>
-            {" "}
-            {activity.name}{" "}
+            {activity.name}
           </option>
         );
       });
@@ -59,14 +62,15 @@ class activityLog extends Component {
 
           <input
             type="text"
+            name="description"
             placeholder="Description"
-            autoComplete="off"
             value={this.state.description}
             onChange={this.handleFormChanges}
           />
 
           <input
             type="text"
+            name="results"
             placeholder="Results"
             autoComplete="off"
             value={this.state.results}
@@ -87,9 +91,11 @@ class activityLog extends Component {
     );
   }
 }
-const mapStateToProps = state => ({
-  activities: state.activities
-});
+function mapStateToProps(state) {
+  return {
+    activities: state.activities
+  };
+}
 
 export default connect(
   mapStateToProps,

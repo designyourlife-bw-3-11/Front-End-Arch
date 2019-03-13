@@ -27,7 +27,7 @@ class App extends Component {
               <Link to="/register">Register</Link>
             </li>
             <li>
-              <Link to="/activity"> Activity Log</Link>
+              <Link to="/activitylog"> Activity Log</Link>
             </li>
           </ul>
           {/* <Route exact path='/' component={App} /> */}

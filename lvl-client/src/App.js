@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import "./app.less";
 import "./App.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
@@ -7,8 +8,15 @@ import PrivateRoute from "./components/PrivateRoute";
 import Protected from "./components/Protected";
 import Register from "./components/Register";
 import ActivityLog from "./components/activitylog/ActivityLog";
-import { getActivities, addActivity, addActivityLog } from "./actions";
-import { connect } from "react-redux";
+import {
+  getActivities,
+  addActivity,
+  addActivityLog,
+  getReflections,
+  addReflection,
+  addReflectionLog
+} from "./actions";
+import ReflectionLog from "./components/reflection/ReflectionLog";
 import styled from "styled-components";
 
 const Header = styled.header`
@@ -36,10 +44,6 @@ const Nav = styled.nav`
   }
 `;
 
-// const Link = styled.link`
-//   margin-left: 1rem;
-// `;
-
 class App extends Component {
   componentDidMount = () => {
     this.props.getActivities();
@@ -62,11 +66,13 @@ class App extends Component {
 
               <Link to="/protected"> Protected </Link>
 
-              <Link to="/login"> Log In</Link>
+              <Link to="/login">Log In</Link>
 
               <Link to="/register">Register</Link>
 
               <Link to="/activitylog"> Activity Log</Link>
+
+              <Link to="/reflectionLog"> Reflection Log</Link>
             </Nav>
           </Header>
           {/* <Route exact path="/" component={App} /> */}
@@ -78,6 +84,17 @@ class App extends Component {
                 activities={this.props.activities}
                 addActivity={this.props.addActivity}
                 addActivityLog={this.props.addActivityLog}
+              />
+            )}
+          />
+          <Route
+            path="/reflectionLog"
+            render={props => (
+              <ReflectionLog
+                {...props}
+                reflections={this.props.reflections}
+                addReflection={this.props.addReflection}
+                addReflectionLog={this.props.addReflectionLog}
               />
             )}
           />
@@ -99,5 +116,12 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { getActivities, addActivity, addActivityLog }
+  {
+    getActivities,
+    addActivity,
+    addActivityLog,
+    getReflections,
+    addReflection,
+    addReflectionLog
+  }
 )(App);

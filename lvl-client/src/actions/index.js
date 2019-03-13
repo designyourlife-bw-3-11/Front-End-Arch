@@ -18,23 +18,29 @@ export const GET_ACTIVITY_START = "GET_ACTIVITY_START";
 export const GET_ACTIVITY_SUCCESS = "GET_ACTIVITY_SUCCESS";
 export const GET_ACTIVITY_FAILURE = "GET_ACTIVITY_FAILURE";
 
-//----Description----//
-export const ADD_DESCRIPTION_REQUEST = "ADD_DESCRIPTION_REQUEST";
-export const ADD_DESCRIPTION_SUCCESS = "ADD_DESCRIPTION_SUCCESS";
-export const ADD_DESCRIPTION_FAILURE = "ADD_DESCRIPTION_FAILURE";
-
+//----- Activity-----//
 export const ADD_ACTIVITY_START = "ADD_ACTIVITY_START";
 export const ADD_ACTIVITY_SUCCESS = "ADD_ACTIVITY_SUCCESS";
 export const ADD_ACTIVITY_FAILURE = "ADD_ACTIVITY_FAILURE";
 
-//----Results----//
-export const ADD_RESULTS_REQUEST = "ADD_RESULTS_REQUEST";
-export const ADD_RESULTS_SUCCESS = "ADD_RESULTS_SUCCESS";
-export const ADD_RESULTS_FAILURE = "ADD_RESULTS_Failure";
-
+//-----Activity Log-----//
 export const ADD_ACTIVITYLOG_START = "ADD_ACTIVITYLOG_START";
 export const ADD_ACTIVITYLOG_SUCCESS = "ADD_ACTIVITYLOG_SUCCESS";
 export const ADD_ACTIVITYLOG_FAILURE = "ADD_ACTIVITYLOG_FAILURE";
+
+//---- Get Reflections -----//
+export const GET_REFLECTION_START = "GET_REFLECTION_START";
+export const GET_REFLECTION_SUCCESS = "GET_REFLECTION_SUCCESS";
+export const GET_REFLECTION_FAILURE = "GET_REFLECTION_FAILURE";
+//----- Reflection-----//
+export const ADD_REFLECTION_START = "ADD_REFLECTION_START";
+export const ADD_REFLECTION_SUCCESS = "ADD_REFLECTION_SUCCESS";
+export const ADD_REFLECTION_FAILURE = "ADD_REFLECTION_FAILURE";
+
+//-----Reflection Log-----//
+export const ADD_REFLECTIONLOG_START = "ADD_REFLECTIONLOG_START";
+export const ADD_REFLECTIONLOG_SUCCESS = "ADD_REFLECTIONLOG_SUCCESS";
+export const ADD_REFLECTIONLOG_FAILURE = "ADD_REFLECTIONLOG_FAILURE";
 
 //----- Login Action -----//
 
@@ -113,7 +119,7 @@ export const addActivity = newActivity => dispatch => {
   dispatch({ type: ADD_ACTIVITY_START });
   axios
     .put(
-      "https://bw-designyourlife-api.herokuapp.com/api/activity-logs/testUser"
+      "https://bw-designyourlife-api.herokuapp.com/api/activity-logs/user/id"
     )
     .then(res => {
       dispatch({
@@ -129,23 +135,74 @@ export const addActivity = newActivity => dispatch => {
     });
 };
 
+//----- Add Activity Log-----//
+
 export const addActivityLog = newActivity => dispatch => {
   dispatch({ type: ADD_ACTIVITYLOG_START });
   console.log(newActivity);
-  //   // axios
-  //   //   .get(
-  //   //     "https://bw-designyourlife-api.herokuapp.com/api/activity-logs/testUser"
-  //     )
-  //     .then(res => {
-  //       dispatch({
-  //         type: ADD_ACTIVITYLOG_SUCCESS,
-  //         payload: newActivity
-  //       });
-  //     })
-  //     .catch(err => {
-  //       dispatch({
-  //         type: ADD_ACTIVITYLOG_FAILURE,
-  //         error: err.response
-  //       });
+  // axios
+  //   .get(
+  //     "https://bw-designyourlife-api.herokuapp.com/api/activity-logs/testUser"
+  //   )
+  //   .then(res => {
+  //     dispatch({
+  //       type: ADD_ACTIVITYLOG_SUCCESS,
+  //       payload: newActivity
   //     });
+  //   })
+  //   .catch(err => {
+  //     dispatch({
+  //       type: ADD_ACTIVITYLOG_FAILURE,
+  //       error: err.response
+  //     });
+  //   });
+};
+
+//----- Get Reflections Action ----//
+
+export const getReflections = () => dispatch => {
+  dispatch({ type: GET_REFLECTION_START });
+  axios
+    .get(
+      "https://bw-designyourlife-api.herokuapp.com/api/reflection-logs/user/id"
+    )
+    .then(res => {
+      dispatch({
+        type: GET_REFLECTION_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_REFLECTION_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
+//----- Add Reflections Action -----//
+
+export const addReflection = newReflection => dispatch => {
+  dispatch({ type: ADD_REFLECTION_START });
+  axios
+    .put(
+      "https://bw-designyourlife-api.herokuapp.com/api/reflection-logs/user/id"
+    )
+    .then(res => {
+      dispatch({
+        type: ADD_REFLECTION_SUCCESS,
+        payload: newReflection
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: ADD_REFLECTION_FAILURE,
+        error: err.response
+      });
+    });
+};
+
+export const addReflectionLog = newReflection => dispatch => {
+  dispatch({ type: ADD_REFLECTIONLOG_START });
+  console.log(newReflection);
 };

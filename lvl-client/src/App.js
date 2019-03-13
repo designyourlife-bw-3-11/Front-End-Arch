@@ -6,10 +6,21 @@ import PrivateRoute from "./components/PrivateRoute";
 import Protected from "./components/Protected";
 import Register from "./components/Register";
 import ActivityLog from "./components/activitylog/ActivityLog";
-
+import { getActivities, addActivity, addActivityLog } from "./actions";
+import { connect } from "react-redux";
 // import styled from "styled-components";
 
 class App extends Component {
+  componentDidMount = () => {
+    this.props.getActivities();
+    // console.log(this.props.getActivities());
+    // this.setState({ activities: activities });
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (!this.props.hasLatestActivities) this.props.getActivities();
+  };
+
   render() {
     return (
       <Router>
@@ -18,7 +29,7 @@ class App extends Component {
 
           <ul>
             <li>
-              <Link to=""> (Public) </Link>
+              <Link to="/"> (Public) </Link>
             </li>
             <li>
               <Link to="/protected"> Protected </Link>
@@ -33,8 +44,18 @@ class App extends Component {
               <Link to="/activitylog"> Activity Log</Link>
             </li>
           </ul>
-          <Route exact path="/" component={App} />
-          <Route path="/activityLog" component={ActivityLog} />
+          {/* <Route exact path="/" component={App} /> */}
+          <Route
+            path="/activityLog"
+            render={props => (
+              <ActivityLog
+                {...props}
+                activities={this.props.activities}
+                addActivity={this.props.addActivity}
+                addActivityLog={this.props.addActivityLog}
+              />
+            )}
+          />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <PrivateRoute exact path="/protected" component={Protected} />
@@ -44,4 +65,14 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    activities: state.activities,
+    hasLatestActivities: state.hasLatestActivities
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  { getActivities, addActivity, addActivityLog }
+)(App);

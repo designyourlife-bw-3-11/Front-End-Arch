@@ -10,7 +10,10 @@ import {
   //   ADD_RESULTS,
   GET_ACTIVITY_START,
   GET_ACTIVITY_SUCCESS,
-  GET_ACTIVITY_FAILURE
+  GET_ACTIVITY_FAILURE,
+  ADD_ACTIVITYLOG_START,
+  ADD_ACTIVITYLOG_SUCCESS,
+  ADD_ACTIVITYLOG_FAILURE
 } from "../actions";
 
 const initialState = {
@@ -18,7 +21,9 @@ const initialState = {
   activities: [],
   error: null,
   isRegistering: false,
-  addingActivity: false
+  gettingActivity: false,
+  addingActivities: false,
+  hasLatestActivities: false
 };
 
 const lvlReducer = (state = initialState, action) => {
@@ -65,20 +70,41 @@ const lvlReducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
-        addingActivity: true
+        gettingActivity: true
       };
     case GET_ACTIVITY_SUCCESS:
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
         activities: action.payload,
-        addingActivity: false
+        gettingActivity: false,
+        hasLatestActivities: true
       };
     case GET_ACTIVITY_FAILURE:
       return {
         ...state,
         error: action.payload,
-        addingActivity: false
+        gettingActivity: false
+      };
+    case ADD_ACTIVITYLOG_START:
+      return {
+        ...state,
+        addingActivities: true,
+        error: null
+      };
+    case ADD_ACTIVITYLOG_SUCCESS:
+      return {
+        ...state,
+        addingActivities: false,
+        activities: action.payload,
+        hasLatestActivities: false,
+        error: null
+      };
+    case ADD_ACTIVITYLOG_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        addingActivities: false
       };
     // case ADD_RESULTS:
     //   return {

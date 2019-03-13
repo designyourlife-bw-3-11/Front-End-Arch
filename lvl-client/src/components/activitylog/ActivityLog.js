@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { addActivity, getActivities } from "../../actions";
-import { connect } from "react-redux";
+// import { addActivity } from "../../actions";
+
 import styled from "styled-components";
 
 const Button = styled.button`
@@ -14,13 +14,22 @@ class activityLog extends Component {
     description: "",
     results: "",
     enjoyment: "",
-    activities: this.props.activities
+    activities: [],
+    logDate: "",
+    outcomes: "",
+    engagement: "",
+    logActivity: ""
   };
 
   componentDidMount = () => {
-    this.props.getActivities();
-    console.log(this.props.getActivities());
-    // this.setState({ activities: activities });
+    this.setState({ activities: this.props.activities });
+    console.log(this.props.activities);
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState.activities !== this.props.activities)
+      this.setState({ activities: this.props.activities });
+    // console.log("update", this.props.activities);
   };
 
   handleFormChanges = e => {
@@ -33,29 +42,24 @@ class activityLog extends Component {
     const { description, results, enjoyment } = this.state;
     e.preventDefault();
     this.props.addActivity({ description, results, enjoyment });
+  };
 
-    // const newActivity = {
-    //   description: this.state.description,
-    //   results: this.state.results,
-    //   enjoyment: this.state.enjoyment
-    // };
-
-    // this.props.addActivity(newActivity);
-    // console.log("newactivity", newActivity);
-
-    // this.setState({
-    //   description: "",
-    //   results: "",
-    //   enjoyment: "",
-    //   activities: []
-    // });
+  handleAddActivityLog = e => {
+    e.preventDefault();
+    const { date, outcomes, enjoyment, engagement, logActivity } = this.state;
+    const logData = {
+      date,
+      outcomes,
+      activities: [{ name: logActivity, enjoyment, engagement }]
+    };
+    this.props.addActivityLog(logData);
   };
 
   render() {
     const activityOptions =
       this.state.activities.length &&
       this.state.activities.map(activity => {
-        console.log(activity);
+        // console.log(activity);
         return (
           <option value={activity.name} key={activity.id}>
             {activity.name}
@@ -64,7 +68,7 @@ class activityLog extends Component {
       });
     return (
       <div>
-        <form onSubmit={addActivity}>
+        <form onSubmit={this.handleAddActivity}>
           <select>{activityOptions}</select>
 
           <input
@@ -75,19 +79,49 @@ class activityLog extends Component {
             onChange={this.handleFormChanges}
           />
 
+          <Button type="submit"> Add Activity </Button>
+        </form>
+
+        <form onSubmit={this.handleAddActivityLog}>
+          <select
+            onChange={this.handleFormChanges}
+            name="logActivity"
+            value={this.state.logActivity}
+          >
+            {activityOptions}
+          </select>
+
           <input
             type="text"
-            name="results"
-            placeholder="Results"
+            name="logDate"
+            placeholder="Date"
+            value={this.state.logDate}
+            onChange={this.handleFormChanges}
+          />
+
+          <input
+            type="text"
+            name="outcomes"
+            placeholder="Outcomes"
             autoComplete="off"
-            value={this.state.results}
+            value={this.state.outcomes}
             onChange={this.handleFormChanges}
           />
 
           <input
             type="number"
             name="enjoyment"
+            placeholder="Enjoyment (1-10)"
             value={this.state.enjoyment}
+            onChange={this.handleFormChanges}
+            autoComplete="off"
+          />
+
+          <input
+            type="number"
+            name="engagement"
+            placeholder="Engagement (1-10)"
+            value={this.state.engagement}
             onChange={this.handleFormChanges}
             autoComplete="off"
           />
@@ -98,13 +132,5 @@ class activityLog extends Component {
     );
   }
 }
-function mapStateToProps(state) {
-  return {
-    activities: state.activities
-  };
-}
 
-export default connect(
-  mapStateToProps,
-  { getActivities, addActivity }
-)(activityLog);
+export default activityLog;

@@ -23,8 +23,7 @@ export const ADD_DESCRIPTION_REQUEST = "ADD_DESCRIPTION_REQUEST";
 export const ADD_DESCRIPTION_SUCCESS = "ADD_DESCRIPTION_SUCCESS";
 export const ADD_DESCRIPTION_FAILURE = "ADD_DESCRIPTION_FAILURE";
 
-//----Enjoyment----//
-export const ADD_ACTIVITY_START = "ADD_ENJOYMENT_START";
+export const ADD_ACTIVITY_START = "ADD_ACTIVITY_START";
 export const ADD_ACTIVITY_SUCCESS = "ADD_ACTIVITY_SUCCESS";
 export const ADD_ACTIVITY_FAILURE = "ADD_ACTIVITY_FAILURE";
 
@@ -32,6 +31,10 @@ export const ADD_ACTIVITY_FAILURE = "ADD_ACTIVITY_FAILURE";
 export const ADD_RESULTS_REQUEST = "ADD_RESULTS_REQUEST";
 export const ADD_RESULTS_SUCCESS = "ADD_RESULTS_SUCCESS";
 export const ADD_RESULTS_FAILURE = "ADD_RESULTS_Failure";
+
+export const ADD_ACTIVITYLOG_START = "ADD_ACTIVITYLOG_START";
+export const ADD_ACTIVITYLOG_SUCCESS = "ADD_ACTIVITYLOG_SUCCESS";
+export const ADD_ACTIVITYLOG_FAILURE = "ADD_ACTIVITYLOG_FAILURE";
 
 //----- Login Action -----//
 
@@ -122,4 +125,25 @@ export const addActivity = newActivity => dispatch => {
         error: err.response
       });
     });
+};
+
+export const addActivityLog = newActivity => dispatch => {
+  dispatch({ type: ADD_ACTIVITYLOG_START });
+  console.log(newActivity);
+  //   // axios
+  //   //   .get(
+  //   //     "https://bw-designyourlife-api.herokuapp.com/api/activity-logs/testUser"
+  //     )
+  //     .then(res => {
+  //       dispatch({
+  //         type: ADD_ACTIVITYLOG_SUCCESS,
+  //         payload: newActivity
+  //       });
+  //     })
+  //     .catch(err => {
+  //       dispatch({
+  //         type: ADD_ACTIVITYLOG_FAILURE,
+  //         error: err.response
+  //       });
+  //     });
 };

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 // import { addActivity } from "../../actions";
-import "../../app.less";
+import "../../App.less";
 import styled from "styled-components";
 
 const Button = styled.button`

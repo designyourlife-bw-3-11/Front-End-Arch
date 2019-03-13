@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "./App.css";
+import "./App.less";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
@@ -15,6 +15,7 @@ import {
   addReflection,
   addReflectionLog
 } from "./actions";
+
 import ReflectionLog from "./components/reflection/ReflectionLog";
 import styled from "styled-components";
 

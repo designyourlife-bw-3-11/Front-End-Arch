@@ -25,25 +25,20 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <h1> LVL </h1>
-
-          <ul>
-            <li>
+          <header>
+            <h1> LVL </h1>
+            <nav>
               <Link to="/"> (Public) </Link>
-            </li>
-            <li>
+
               <Link to="/protected"> Protected </Link>
-            </li>
-            <li>
+
               <Link to="/login"> Log In</Link>
-            </li>
-            <li>
+
               <Link to="/register">Register</Link>
-            </li>
-            <li>
+
               <Link to="/activitylog"> Activity Log</Link>
-            </li>
-          </ul>
+            </nav>
+          </header>
           {/* <Route exact path="/" component={App} /> */}
           <Route
             path="/activityLog"

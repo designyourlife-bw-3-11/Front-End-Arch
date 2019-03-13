@@ -46,9 +46,15 @@ class activityLog extends Component {
 
   handleAddActivityLog = e => {
     e.preventDefault();
-    const { date, outcomes, enjoyment, engagement, logActivity } = this.state;
+    const {
+      logDate,
+      outcomes,
+      enjoyment,
+      engagement,
+      logActivity
+    } = this.state;
     const logData = {
-      date,
+      date: new Date(logDate),
       outcomes,
       activities: [{ name: logActivity, enjoyment, engagement }]
     };

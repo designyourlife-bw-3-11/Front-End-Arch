@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 import { addActivity, getActivities } from "../../actions";
 import { connect } from "react-redux";
+import styled from "styled-components";
+
+const Button = styled.button`
+  background: grey;
+  width: 8rem;
+  margin-left: 2rem;
+`;
 
 class activityLog extends Component {
   state = {
@@ -85,7 +92,7 @@ class activityLog extends Component {
             autoComplete="off"
           />
 
-          <button type="submit"> Add Activity</button>
+          <Button type="submit"> Add Activity </Button>
         </form>
       </div>
     );

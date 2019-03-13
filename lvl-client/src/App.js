@@ -6,6 +6,9 @@ import PrivateRoute from "./components/PrivateRoute";
 import Protected from "./components/Protected";
 import Register from "./components/Register";
 import ActivityLog from "./components/activitylog/ActivityLog";
+
+// import styled from "styled-components";
+
 class App extends Component {
   render() {
     return (
@@ -30,7 +33,7 @@ class App extends Component {
               <Link to="/activitylog"> Activity Log</Link>
             </li>
           </ul>
-          {/* <Route exact path='/' component={App} /> */}
+          <Route exact path="/" component={App} />
           <Route path="/activityLog" component={ActivityLog} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />

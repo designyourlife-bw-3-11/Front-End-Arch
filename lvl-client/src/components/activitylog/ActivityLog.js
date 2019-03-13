@@ -9,6 +9,11 @@ const Button = styled.button`
   margin-left: 2rem;
 `;
 
+const Input = styled.input`
+  margin-left: 1rem;
+  margin-bottom: 1.3rem;
+`;
+
 class activityLog extends Component {
   state = {
     description: "",
@@ -77,7 +82,7 @@ class activityLog extends Component {
         <form onSubmit={this.handleAddActivity}>
           <select>{activityOptions}</select>
 
-          <input
+          <Input
             type="text"
             name="description"
             placeholder="Description"
@@ -97,7 +102,7 @@ class activityLog extends Component {
             {activityOptions}
           </select>
 
-          <input
+          <Input
             type="text"
             name="logDate"
             placeholder="Date"
@@ -105,7 +110,7 @@ class activityLog extends Component {
             onChange={this.handleFormChanges}
           />
 
-          <input
+          <Input
             type="text"
             name="outcomes"
             placeholder="Outcomes"
@@ -114,7 +119,7 @@ class activityLog extends Component {
             onChange={this.handleFormChanges}
           />
 
-          <input
+          <Input
             type="number"
             name="enjoyment"
             placeholder="Enjoyment (1-10)"
@@ -123,7 +128,7 @@ class activityLog extends Component {
             autoComplete="off"
           />
 
-          <input
+          <Input
             type="number"
             name="engagement"
             placeholder="Engagement (1-10)"

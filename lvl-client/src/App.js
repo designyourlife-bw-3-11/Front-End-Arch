@@ -12,8 +12,8 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 const Header = styled.header`
-  background: @lvl-dark;
-  color: @lvl-light;
+  background: #3d4247;
+  color: #ffffff;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -27,15 +27,18 @@ const Header = styled.header`
 
 const Nav = styled.nav`
   font-size: 1.8rem;
-  padding: 1rem;
 
   &:hover {
     color: #81fffe;
     padding-bottom: 3px;
     margin-bottom: 7px;
-    border-bottom: 1.5px solid @lvl-light-main;
+    border-bottom: 1.5px solid #81fffe;
   }
 `;
+
+// const Link = styled.link`
+//   margin-left: 1rem;
+// `;
 
 class App extends Component {
   componentDidMount = () => {

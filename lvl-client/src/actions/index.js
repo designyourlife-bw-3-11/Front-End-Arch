@@ -202,6 +202,7 @@ export const addReflection = newReflection => dispatch => {
     });
 };
 
+//----- Add Reflection Log Action -----//
 export const addReflectionLog = newReflection => dispatch => {
   dispatch({ type: ADD_REFLECTIONLOG_START });
   console.log(newReflection);

@@ -120,6 +120,7 @@ const lvlReducer = (state = initialState, action) => {
         gettingReflection: true
       };
     case GET_REFLECTION_SUCCESS:
+      console.log(action.payload);
       return {
         ...state,
         reflections: action.payload,

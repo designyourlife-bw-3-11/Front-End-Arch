@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "./app.less";
 import "./App.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
@@ -35,6 +34,13 @@ const Header = styled.header`
 
 const Nav = styled.nav`
   font-size: 1.8rem;
+`;
+
+const NavButton = styled(Link)`
+  text-align: center;
+  margin-left: 1rem;
+  text-decoration: none;
+  color: #ffffff
 
   &:hover {
     color: #81fffe;
@@ -62,17 +68,17 @@ class App extends Component {
           <Header>
             <h1> LVL </h1>
             <Nav>
-              <Link to="/"> (Public) </Link>
+              <NavButton to="/"> (Public) </NavButton>
 
-              <Link to="/protected"> Protected </Link>
+              <NavButton to="/protected"> Protected </NavButton>
 
-              <Link to="/login">Log In</Link>
+              <NavButton to="/login">Log In</NavButton>
 
-              <Link to="/register">Register</Link>
+              <NavButton to="/register">Register</NavButton>
 
-              <Link to="/activitylog"> Activity Log</Link>
+              <NavButton to="/activitylog"> Activity Log</NavButton>
 
-              <Link to="/reflectionLog"> Reflection Log</Link>
+              <NavButton to="/reflectionLog"> Reflection Log</NavButton>
             </Nav>
           </Header>
           {/* <Route exact path="/" component={App} /> */}

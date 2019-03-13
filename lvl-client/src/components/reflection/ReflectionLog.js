@@ -12,9 +12,15 @@ const Input = styled.input`
   margin-bottom: 1.3rem;
 `;
 
+const SummaryInput = styled.input`
+  width: 25rem;
+  height: 7rem;
+  margin-left: 2rem;
+`;
+
 class reflectionLog extends Component {
   state = {
-    date: "",
+    logDate: "",
     reflectionSummary: ""
   };
 
@@ -43,17 +49,11 @@ class reflectionLog extends Component {
 
   //   handleAddActivityLog = e => {
   //     e.preventDefault();
-  //     const {
-  //       logDate,
-  //       outcomes,
-  //       enjoyment,
-  //       engagement,
-  //       logActivity
-  //     } = this.state;
+  //     const { logDate, reflectionSummary } = this.state;
   //     const logData = {
   //       date: new Date(logDate),
   //       outcomes,
-  //       activities: [{ name: logActivity, enjoyment, engagement }]
+  //       reflections: [{ name: logReflection }]
   //     };
   //     this.props.addActivityLog(logData);
   //   };
@@ -65,17 +65,17 @@ class reflectionLog extends Component {
           <h3> This is Your Reflection Log</h3>
           <Input
             type="text"
-            name="date"
+            name="logDate"
             placeholder="Date"
-            value={this.state.logDate}
-            onChange={this.handleFormChanges}
+            // value={this.state.logDate}
+            // onChange={this.handleFormChanges}
           />
-          <Input
+          <SummaryInput
             type="text"
             name="reflectionSummary"
             placeholder="Reflection on your Weeks activities"
-            value={this.state.reflectionSummary}
-            onChange={this.handleFormChanges}
+            // value={this.state.reflectionSummary}
+            // onChange={this.handleFormChanges}
           />
 
           <Button type="submit"> Add Reflection </Button>

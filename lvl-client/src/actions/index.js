@@ -112,7 +112,9 @@ export const getActivities = () => dispatch => {
 export const addActivity = newActivity => dispatch => {
   dispatch({ type: ADD_ACTIVITY_START });
   axios
-    .get("https://bw-designyourlife-api.herokuapp.com/api/activities")
+    .put(
+      "https://bw-designyourlife-api.herokuapp.com/api/activity-logs/testUser"
+    )
     .then(res => {
       dispatch({
         type: ADD_ACTIVITY_SUCCESS,

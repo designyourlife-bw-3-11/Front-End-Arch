@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./app.less";
 import "./App.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
@@ -8,7 +9,33 @@ import Register from "./components/Register";
 import ActivityLog from "./components/activitylog/ActivityLog";
 import { getActivities, addActivity, addActivityLog } from "./actions";
 import { connect } from "react-redux";
-// import styled from "styled-components";
+import styled from "styled-components";
+
+const Header = styled.header`
+  background: @lvl-dark;
+  color: @lvl-light;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+
+  @media @mobile {
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+`;
+
+const Nav = styled.nav`
+  font-size: 1.8rem;
+  padding: 1rem;
+
+  &:hover {
+    color: #81fffe;
+    padding-bottom: 3px;
+    margin-bottom: 7px;
+    border-bottom: 1.5px solid @lvl-light-main;
+  }
+`;
 
 class App extends Component {
   componentDidMount = () => {
@@ -25,9 +52,9 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <header>
+          <Header>
             <h1> LVL </h1>
-            <nav>
+            <Nav>
               <Link to="/"> (Public) </Link>
 
               <Link to="/protected"> Protected </Link>
@@ -37,8 +64,8 @@ class App extends Component {
               <Link to="/register">Register</Link>
 
               <Link to="/activitylog"> Activity Log</Link>
-            </nav>
-          </header>
+            </Nav>
+          </Header>
           {/* <Route exact path="/" component={App} /> */}
           <Route
             path="/activityLog"

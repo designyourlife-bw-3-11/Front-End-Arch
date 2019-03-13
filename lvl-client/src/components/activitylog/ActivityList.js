@@ -6,7 +6,7 @@ const ActivityList = props => {
   return (
     <div className="Activity-List">
       {props.activities.map((activity, index) => (
-        <h2 key={index}> {activity.value} </h2>
+        <h2 key={activity.id}> {activity.value} </h2>
       ))}
     </div>
   );

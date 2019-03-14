@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "./App.less";
+
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
@@ -9,10 +9,10 @@ import Register from "./components/Register";
 import ActivityLog from "./components/activitylog/ActivityLog";
 import {
   getActivities,
-  addActivity,
+  // addActivity,
   addActivityLog,
   getReflections,
-  addReflection,
+  // addReflection,
   addReflectionLog
 } from "./actions";
 
@@ -53,13 +53,14 @@ const NavButton = styled(Link)`
 
 class App extends Component {
   componentDidMount = () => {
-    this.props.getActivities();
+    this.props.getActivities("testuser", "");
     // console.log(this.props.getActivities());
     // this.setState({ activities: activities });
   };
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (!this.props.hasLatestActivities) this.props.getActivities();
+    if (!this.props.hasLatestActivities)
+      this.props.getActivities("testuser", "");
   };
 
   render() {
@@ -79,15 +80,16 @@ class App extends Component {
 
               <NavButton to="/activitylog"> Activity Log</NavButton>
 
-              <NavButton to="/reflectionLog"> Reflection Log</NavButton>
+              <NavButton to="/reflectionlog"> Reflection Log</NavButton>
             </Nav>
           </Header>
           {/* <Route exact path="/" component={App} /> */}
           <Route
-            path="/activityLog"
+            path="/activitylog"
             render={props => (
               <ActivityLog
                 {...props}
+                activitiesLog={this.props.activitiesLog}
                 activities={this.props.activities}
                 addActivity={this.props.addActivity}
                 addActivityLog={this.props.addActivityLog}
@@ -95,7 +97,7 @@ class App extends Component {
             )}
           />
           <Route
-            path="/reflectionLog"
+            path="/reflectionlog"
             render={props => (
               <ReflectionLog
                 {...props}
@@ -115,9 +117,12 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state.activitiesLog);
   return {
+    activitiesLog: state.activitiesLog,
     activities: state.activities,
-    hasLatestActivities: state.hasLatestActivities
+    hasLatestActivities: state.hasLatestActivities,
+    reflections: state.reflections
   };
 }
 
@@ -125,10 +130,10 @@ export default connect(
   mapStateToProps,
   {
     getActivities,
-    addActivity,
+    // addActivity,
     addActivityLog,
     getReflections,
-    addReflection,
+    // addReflection,
     addReflectionLog
   }
 )(App);

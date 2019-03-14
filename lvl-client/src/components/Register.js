@@ -36,12 +36,16 @@ class Register extends Component {
   };
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <div>
-        <form onSubmit={this.handleRegister}>
+        <form
+          style={{ margin: "20px auto", display: "block" }}
+          onSubmit={this.handleRegister}
+        >
           <h4>Username: </h4>
           <input
+            // style={{ margin: "20px auto", display: "block" }}
             type="text"
             name="username"
             value={this.state.credentials.username}
@@ -49,6 +53,7 @@ class Register extends Component {
           />
           <h4> Password: </h4>
           <input
+            // style={{ margin: "20px auto", display: "block" }}
             type="password"
             name="password"
             value={this.state.credentials.password}
@@ -56,6 +61,7 @@ class Register extends Component {
           />
           <h4>Confirm Password: </h4>
           <input
+            // style={{ margin: "20px auto", display: "block" }}
             type="password"
             name="confirmPassword"
             value={this.state.credentials.confirmPassword}

@@ -1,17 +1,22 @@
 import React, { Component } from "react";
 // import { addActivity } from "../../actions";
-import "../../App.less";
+
 import styled from "styled-components";
+import ActivityList from "./ActivityList";
 
 const Button = styled.button`
   background: grey;
   width: 8rem;
   margin-left: 2rem;
+  margin: 20px;
+  display: flex;
 `;
 
 const Input = styled.input`
   margin-left: 1rem;
   margin-bottom: 1.3rem;
+  display: flex;
+  align-content: center;
 `;
 
 class activityLog extends Component {
@@ -49,6 +54,13 @@ class activityLog extends Component {
     this.props.addActivity({ description, results, enjoyment });
   };
 
+  submitHandler = e => {
+    e.preventDefault();
+    console.log("works");
+    this.props.addReflectionLog(this.state);
+    // this.setState({ date: "", reflectionSummary: ""})
+  };
+
   handleAddActivityLog = e => {
     e.preventDefault();
     const {
@@ -58,11 +70,13 @@ class activityLog extends Component {
       engagement,
       logActivity
     } = this.state;
+    // debugger;
     const logData = {
-      date: new Date(logDate),
       outcomes,
+      date: new Date(logDate),
       activities: [{ name: logActivity, enjoyment, engagement }]
     };
+    // debugger;
     this.props.addActivityLog(logData);
   };
 
@@ -79,8 +93,8 @@ class activityLog extends Component {
       });
     return (
       <div>
-        <form onSubmit={this.handleAddActivity}>
-          <select>{activityOptions}</select>
+        {/* <form onSubmit={this.handleAddActivity}>
+          <select style={{ margin: "20px auto" }}>{activityOptions}</select>
 
           <Input
             type="text"
@@ -91,10 +105,11 @@ class activityLog extends Component {
           />
 
           <Button type="submit"> Add Activity </Button>
-        </form>
+        </form> */}
 
         <form onSubmit={this.handleAddActivityLog}>
           <select
+            style={{ margin: "20px auto" }}
             onChange={this.handleFormChanges}
             name="logActivity"
             value={this.state.logActivity}
@@ -137,7 +152,9 @@ class activityLog extends Component {
             autoComplete="off"
           />
 
-          <Button type="submit"> Add Activity </Button>
+          <Button type="submit"> Add Activity Log </Button>
+
+          <ActivityList {...this.props} />
         </form>
       </div>
     );

@@ -6,14 +6,14 @@ import "./index.css";
 import App from "./App";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
-import rootReducer from "./reducers";
+import lvlReducer from "./reducers";
 
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
-  rootReducer, // root reducer checks for login by looking for user in localStorage
+  lvlReducer, // root reducer checks for login by looking for user in localStorage
   composeEnhancers(applyMiddleware(thunk, logger)) //, logger))
 );
 

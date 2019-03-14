@@ -1,3 +1,5 @@
+//----- Import Actions----//
+
 import {
   FETCH_REQUEST,
   FETCH_SUCCESS,
@@ -8,6 +10,12 @@ import {
   GET_ACTIVITY_START,
   GET_ACTIVITY_SUCCESS,
   GET_ACTIVITY_FAILURE,
+  GET_ACTIVITYLOG_START,
+  GET_ACTIVITYLOG_SUCCESS,
+  GET_ACTIVITYLOG_FAILURE,
+  DELETE_ACTIVITYLOG_REQUEST,
+  DELETE_ACTIVITYLOG_SUCCESS,
+  DELETE_ACTIVITYLOG_FAILURE,
   ADD_ACTIVITYLOG_START,
   ADD_ACTIVITYLOG_SUCCESS,
   ADD_ACTIVITYLOG_FAILURE,
@@ -19,22 +27,27 @@ import {
   ADD_REFLECTIONLOG_FAILURE
 } from "../actions";
 
+//----- Initial State -----//
 const initialState = {
   isLoggingIn: false,
   activities: [],
   reflections: [],
+  activitiesLog: [],
   error: null,
   isRegistering: false,
   gettingActivity: false,
   addingActivities: false,
+  deletingActivities: false,
   hasLatestActivities: false,
   gettingReflection: false,
   addingReflections: false,
   hasLatestReflections: false
 };
 
+//----- Reducer -----//
 const lvlReducer = (state = initialState, action) => {
   switch (action.type) {
+    //----- Fetch -----//
     case FETCH_REQUEST:
       return {
         ...state,
@@ -54,6 +67,8 @@ const lvlReducer = (state = initialState, action) => {
         error: action.payload,
         isLoggingIn: false
       };
+
+    //----- Register -----//
     case REGISTER_START:
       return {
         ...state,
@@ -73,6 +88,7 @@ const lvlReducer = (state = initialState, action) => {
         isRegistering: false
       };
 
+    //----- Get Activity -----//
     case GET_ACTIVITY_START:
       return {
         ...state,
@@ -93,6 +109,52 @@ const lvlReducer = (state = initialState, action) => {
         error: action.payload,
         gettingActivity: false
       };
+
+    //----- Get Activity Log -----//
+    case GET_ACTIVITYLOG_START:
+      return {
+        ...state,
+        error: null,
+        gettingActivity: true
+      };
+    case GET_ACTIVITYLOG_SUCCESS:
+      // console.log(action.payload);
+      return {
+        ...state,
+        activitiesLog: action.payload,
+        gettingActivity: false,
+        hasLatestActivities: true
+      };
+    case GET_ACTIVITYLOG_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        gettingActivity: false
+      };
+
+    //----- Delete Activity -----//
+    case DELETE_ACTIVITYLOG_REQUEST:
+      return {
+        ...state,
+        deletingActivities: true,
+        error: null
+      };
+    case DELETE_ACTIVITYLOG_SUCCESS:
+      return {
+        ...state,
+        deletingActivities: false,
+        activities: state.activities.filter(
+          activityLog => activityLog !== action.payload
+        )
+      };
+    case DELETE_ACTIVITYLOG_FAILURE:
+      return {
+        ...state,
+        deletingActivities: false,
+        error: action.payload
+      };
+
+    //----- Add Activity Log -----//
     case ADD_ACTIVITYLOG_START:
       return {
         ...state,
@@ -103,7 +165,7 @@ const lvlReducer = (state = initialState, action) => {
       return {
         ...state,
         addingActivities: false,
-        activities: action.payload,
+        activitiesLog: [...state.activitiesLog, action.payload],
         hasLatestActivities: false,
         error: null
       };
@@ -113,6 +175,8 @@ const lvlReducer = (state = initialState, action) => {
         error: action.payload,
         addingActivities: false
       };
+
+    //----- Get Reflection -----//
     case GET_REFLECTION_START:
       return {
         ...state,
@@ -133,6 +197,8 @@ const lvlReducer = (state = initialState, action) => {
         error: action.payload,
         gettingReflection: false
       };
+
+    //----- Add Reflection Log -----//
     case ADD_REFLECTIONLOG_START:
       return {
         ...state,

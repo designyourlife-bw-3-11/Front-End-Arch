@@ -1,5 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { addReflectionLog } from "../../actions";
 
 const Button = styled.button`
   background: grey;
@@ -18,28 +20,36 @@ const SummaryInput = styled.input`
   margin-left: 2rem;
 `;
 
-class reflectionLog extends Component {
+class reflectionLog extends React.Component {
   state = {
-    logDate: "",
-    reflectionSummary: ""
+    date: "",
+    reflectionSummary: "",
+    reflections: []
   };
 
-  //   componentDidMount = () => {
-  //     this.setState({ activities: this.props.activities });
-  //     console.log(this.props.activities);
-  //   };
+  componentDidMount = () => {
+    this.setState({ reflections: this.props.reflections });
+    console.log(this.props.reflections);
+  };
 
   //   componentDidUpdate = (prevProps, prevState) => {
   //     if (prevState.activities !== this.props.activities)
   //       this.setState({ activities: this.props.activities });
-  //     // console.log("update", this.props.activities);
+  //     console.log("update", this.props.reflectionLog);
   //   };
 
-  //   handleFormChanges = e => {
-  //     e.preventDefault();
-  //     const { name, value } = e.target;
-  //     this.setState({ [name]: value });
-  //   };
+  handleFormChanges = e => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
+
+  submitHandler = e => {
+    e.preventDefault();
+    console.log("works");
+    this.props.addReflectionLog(this.state);
+    this.setState({ date: "", reflectionSummary: "" });
+  };
 
   //   handleAddActivity = e => {
   //     const { description, results, enjoyment } = this.state;
@@ -62,15 +72,17 @@ class reflectionLog extends Component {
     return (
       <div>
         <form onSubmit={this.handleAddReflectionLog}>
-          <h3> This is Your Reflection Log</h3>
+          <h3>This is Your Reflection Log</h3>
           <Input
+            style={{ margin: "20px auto", display: "block" }}
             type="text"
             name="logDate"
             placeholder="Date"
-            // value={this.state.logDate}
-            // onChange={this.handleFormChanges}
+            value={this.state.date}
+            onChange={this.handleFormChanges}
           />
           <SummaryInput
+            style={{ margin: "20px auto", display: "block" }}
             type="text"
             name="reflectionSummary"
             placeholder="Reflection on your Weeks activities"
@@ -78,11 +90,19 @@ class reflectionLog extends Component {
             // onChange={this.handleFormChanges}
           />
 
-          <Button type="submit"> Add Reflection </Button>
+          <Button
+            style={{ margin: "20px auto", display: "block" }}
+            type="submit"
+          >
+            Add Reflection
+          </Button>
         </form>
       </div>
     );
   }
 }
 
-export default reflectionLog;
+export default connect(
+  null,
+  { addReflectionLog }
+)(reflectionLog);

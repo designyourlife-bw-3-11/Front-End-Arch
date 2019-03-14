@@ -1,24 +1,19 @@
 import React from "react";
-import { connect } from "react-redux";
-import { activityLogAction } from "../../actions";
 
-const ActivityList = props => {
-  return (
-    <div className="Activity-List">
-      {props.activities.map((activity, index) => (
-        <h2 key={activity.id}> {activity.value} </h2>
-      ))}
-    </div>
-  );
-};
+import Activity from "./Activity";
 
-const mapStateToProps = state => {
-  return {
-    activities: state.activities
-  };
-};
+class ActivityList extends React.Component {
+  render() {
+    // console.log(this.props.activities);
+    return (
+      <div className="Activity-List">
+        <h1> Activities List</h1>
+        {this.props.activitiesLog.map((activity, index) => (
+          <Activity key={index} activity={activity} />
+        ))}
+      </div>
+    );
+  }
+}
 
-export default connect(
-  mapStateToProps,
-  { activityLogAction }
-)(ActivityList);
+export default ActivityList;

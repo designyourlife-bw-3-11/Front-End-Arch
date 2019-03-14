@@ -18,16 +18,25 @@ export const GET_ACTIVITY_START = "GET_ACTIVITY_START";
 export const GET_ACTIVITY_SUCCESS = "GET_ACTIVITY_SUCCESS";
 export const GET_ACTIVITY_FAILURE = "GET_ACTIVITY_FAILURE";
 
+//-----ActivityLog -----//
+export const GET_ACTIVITYLOG_START = "GET_ACTIVITYLOG_START";
+export const GET_ACTIVITYLOG_SUCCESS = "GET_ACTIVITYLOG_SUCCESS";
+export const GET_ACTIVITYLOG_FAILURE = "GET_ACTIVITYLOG_FAILURE";
+
 //----- Activity-----//
-export const ADD_ACTIVITY_START = "ADD_ACTIVITY_START";
-export const ADD_ACTIVITY_SUCCESS = "ADD_ACTIVITY_SUCCESS";
-export const ADD_ACTIVITY_FAILURE = "ADD_ACTIVITY_FAILURE";
+// export const ADD_ACTIVITY_START = "ADD_ACTIVITY_START";
+// export const ADD_ACTIVITY_SUCCESS = "ADD_ACTIVITY_SUCCESS";
+// export const ADD_ACTIVITY_FAILURE = "ADD_ACTIVITY_FAILURE";
 
 //-----Activity Log-----//
 export const ADD_ACTIVITYLOG_START = "ADD_ACTIVITYLOG_START";
 export const ADD_ACTIVITYLOG_SUCCESS = "ADD_ACTIVITYLOG_SUCCESS";
 export const ADD_ACTIVITYLOG_FAILURE = "ADD_ACTIVITYLOG_FAILURE";
 
+//----- Delete Activity-----//
+export const DELETE_ACTIVITYLOG_REQUEST = "DELETE_ACTIVITY_REQUEST";
+export const DELETE_ACTIVITYLOG_SUCCESS = "DELETE_ACTIVITY_SUCCESS";
+export const DELETE_ACTIVITYLOG_FAILURE = "DELETE_ACTIVITY_FAILURE";
 //---- Get Reflections -----//
 export const GET_REFLECTION_START = "GET_REFLECTION_START";
 export const GET_REFLECTION_SUCCESS = "GET_REFLECTION_SUCCESS";
@@ -50,6 +59,7 @@ export const login = creds => dispatch => {
     .post("https://bw-designyourlife-api.herokuapp.com/api/auth/login", creds)
     .then(res => {
       console.log(res.data);
+      localStorage.setItem("username", creds.username);
       localStorage.setItem("token", res.data.token);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data.payload });
       getData();
@@ -95,10 +105,12 @@ export const registerUser = creds => dispatch => {
 
 //----- Get Activity Action -----//
 
-export const getActivities = () => dispatch => {
+export const getActivities = (user, id) => dispatch => {
   dispatch({ type: GET_ACTIVITY_START });
   axios
-    .get("https://bw-designyourlife-api.herokuapp.com/api/activities/username")
+    .get(
+      `https://bw-designyourlife-api.herokuapp.com/api/activities/${user}/${id}`
+    )
     .then(res => {
       dispatch({
         type: GET_ACTIVITY_SUCCESS,
@@ -106,6 +118,7 @@ export const getActivities = () => dispatch => {
       });
     })
     .catch(err => {
+      console.log(err);
       dispatch({
         type: GET_ACTIVITY_FAILURE,
         payload: err.response
@@ -113,58 +126,103 @@ export const getActivities = () => dispatch => {
     });
 };
 
-//----- Add Activity Action-----//
+//----- Gte Activity Log-----//
 
-export const addActivity = newActivity => dispatch => {
-  dispatch({ type: ADD_ACTIVITY_START });
+export const getActivityLog = () => dispatch => {
+  dispatch({ type: GET_ACTIVITYLOG_START });
   axios
-    .put(
-      "https://bw-designyourlife-api.herokuapp.com/api/activity-logs/user/id"
-    )
+    .get(`https://bw-designyourlife-api.herokuapp.com/api/activities/user`)
     .then(res => {
       dispatch({
-        type: ADD_ACTIVITY_SUCCESS,
-        payload: newActivity
+        type: GET_ACTIVITYLOG_SUCCESS,
+        payload: res.data
       });
     })
     .catch(err => {
+      console.log(err);
       dispatch({
-        type: ADD_ACTIVITY_FAILURE,
-        error: err.response
+        type: GET_ACTIVITYLOG_FAILURE,
+        payload: err.response
       });
     });
 };
+
+//----- Add Activity Action-----//
+
+// export const addActivity = newActivity => dispatch => {
+//   dispatch({ type: ADD_ACTIVITY_START });
+//   axios
+//     .post(
+//       "https://bw-designyourlife-api.herokuapp.com/api/activity-logs/user/id"
+//     )
+//     .then(res => {
+//       dispatch({
+//         type: ADD_ACTIVITY_SUCCESS,
+//         payload: newActivity
+//       });
+//     })
+//     .catch(err => {
+//       dispatch({
+//         type: ADD_ACTIVITY_FAILURE,
+//         error: err.response
+//       });
+//     });
+// };
 
 //----- Add Activity Log-----//
 
 export const addActivityLog = newActivity => dispatch => {
   dispatch({ type: ADD_ACTIVITYLOG_START });
   console.log(newActivity);
-  // axios
-  //   .get(
-  //     "https://bw-designyourlife-api.herokuapp.com/api/activity-logs/testUser"
-  //   )
-  //   .then(res => {
-  //     dispatch({
-  //       type: ADD_ACTIVITYLOG_SUCCESS,
-  //       payload: newActivity
-  //     });
-  //   })
-  //   .catch(err => {
-  //     dispatch({
-  //       type: ADD_ACTIVITYLOG_FAILURE,
-  //       error: err.response
-  //     });
-  //   });
+  const user = localStorage.getItem("username");
+  axios
+    .post(
+      `https://bw-designyourlife-api.herokuapp.com/api/activity-logs/${user}`,
+      newActivity
+    )
+    .then(res => {
+      console.log("addActivityLog", res.data);
+      dispatch({
+        type: ADD_ACTIVITYLOG_SUCCESS,
+        payload: newActivity
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: ADD_ACTIVITYLOG_FAILURE,
+        error: err.response
+      });
+    });
+};
+
+//----- Delete Activity Action -----//
+
+export const deleteActivityLog = id => dispatch => {
+  dispatch({ type: DELETE_ACTIVITYLOG_REQUEST });
+  axios
+    .delete(
+      "https://bw-designyourlife-api.herokuapp.com/api/activity-logs/user"
+    )
+    .then(res => {
+      dispatch({
+        type: DELETE_ACTIVITYLOG_SUCCESS,
+        payload: res.data
+      }).catch(err => {
+        dispatch({
+          type: DELETE_ACTIVITYLOG_FAILURE,
+          payload: err.response
+        });
+      });
+    });
 };
 
 //----- Get Reflections Action ----//
 
-export const getReflections = () => dispatch => {
+export const getReflections = id => dispatch => {
   dispatch({ type: GET_REFLECTION_START });
   axios
     .get(
-      "https://bw-designyourlife-api.herokuapp.com/api/reflection-logs/user/id"
+      `https://bw-designyourlife-api.herokuapp.com/api/reflection-logs/user/${id}`
     )
     .then(res => {
       dispatch({
@@ -182,28 +240,29 @@ export const getReflections = () => dispatch => {
 
 //----- Add Reflections Action -----//
 
-export const addReflection = newReflection => dispatch => {
-  dispatch({ type: ADD_REFLECTION_START });
+export const addReflectionLog = newReflection => dispatch => {
+  dispatch({ type: ADD_REFLECTIONLOG_START });
   axios
-    .put(
-      "https://bw-designyourlife-api.herokuapp.com/api/reflection-logs/user/id"
+    .post(
+      "https://bw-designyourlife-api.herokuapp.com/api/reflection-logs/user",
+      newReflection
     )
     .then(res => {
       dispatch({
-        type: ADD_REFLECTION_SUCCESS,
+        type: ADD_REFLECTIONLOG_SUCCESS,
         payload: newReflection
       });
     })
     .catch(err => {
       dispatch({
-        type: ADD_REFLECTION_FAILURE,
+        type: ADD_REFLECTIONLOG_FAILURE,
         error: err.response
       });
     });
 };
 
-//----- Add Reflection Log Action -----//
-export const addReflectionLog = newReflection => dispatch => {
-  dispatch({ type: ADD_REFLECTIONLOG_START });
-  console.log(newReflection);
-};
+// //----- Add Reflection Log Action -----//
+// export const addReflectionLog = newReflection => dispatch => {
+//   dispatch({ type: ADD_REFLECTIONLOG_START });
+//   console.log(newReflection);
+// };

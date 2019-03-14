@@ -11,7 +11,8 @@ import {
   getActivities,
   // addActivity,
   addActivityLog,
-  getReflections,
+  getActivityLog,
+  getReflectionLog,
   // addReflection,
   addReflectionLog
 } from "./actions";
@@ -58,9 +59,10 @@ class App extends Component {
     // this.setState({ activities: activities });
   };
 
-  componentDidUpdate = (prevProps, prevState) => {
+  componentDidUpdate = () => {
     if (!this.props.hasLatestActivities)
       this.props.getActivities("testuser", "");
+    this.props.getActivityLog("testuser", "");
   };
 
   render() {
@@ -89,6 +91,7 @@ class App extends Component {
             render={props => (
               <ActivityLog
                 {...props}
+                getActivityLog={this.props.getActivityLog}
                 activitiesLog={this.props.activitiesLog}
                 activities={this.props.activities}
                 addActivity={this.props.addActivity}
@@ -131,8 +134,9 @@ export default connect(
   {
     getActivities,
     // addActivity,
+    getActivityLog,
     addActivityLog,
-    getReflections,
+    getReflectionLog,
     // addReflection,
     addReflectionLog
   }

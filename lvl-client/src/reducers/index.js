@@ -19,9 +19,9 @@ import {
   ADD_ACTIVITYLOG_START,
   ADD_ACTIVITYLOG_SUCCESS,
   ADD_ACTIVITYLOG_FAILURE,
-  GET_REFLECTION_START,
-  GET_REFLECTION_SUCCESS,
-  GET_REFLECTION_FAILURE,
+  GET_REFLECTIONLOG_START,
+  GET_REFLECTIONLOG_SUCCESS,
+  GET_REFLECTIONLOG_FAILURE,
   ADD_REFLECTIONLOG_START,
   ADD_REFLECTIONLOG_SUCCESS,
   ADD_REFLECTIONLOG_FAILURE
@@ -30,17 +30,29 @@ import {
 //----- Initial State -----//
 const initialState = {
   isLoggingIn: false,
+
   activities: [],
+
   reflections: [],
+
   activitiesLog: [],
+
   error: null,
+
   isRegistering: false,
+
   gettingActivity: false,
+
   addingActivities: false,
+
   deletingActivities: false,
+
   hasLatestActivities: false,
+
   gettingReflection: false,
+
   addingReflections: false,
+
   hasLatestReflections: false
 };
 
@@ -177,13 +189,13 @@ const lvlReducer = (state = initialState, action) => {
       };
 
     //----- Get Reflection -----//
-    case GET_REFLECTION_START:
+    case GET_REFLECTIONLOG_START:
       return {
         ...state,
         error: null,
         gettingReflection: true
       };
-    case GET_REFLECTION_SUCCESS:
+    case GET_REFLECTIONLOG_SUCCESS:
       console.log(action.payload);
       return {
         ...state,
@@ -191,7 +203,7 @@ const lvlReducer = (state = initialState, action) => {
         gettingReflection: false,
         hasLatestReflections: true
       };
-    case GET_REFLECTION_FAILURE:
+    case GET_REFLECTIONLOG_FAILURE:
       return {
         ...state,
         error: action.payload,

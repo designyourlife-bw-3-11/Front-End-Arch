@@ -1,16 +1,18 @@
 import React from "react";
+import "../../index.css";
 
 const Activity = props => {
   return (
-    <div>
-      {/* <p> {props.activity.results}</p>
-      <p> {props.activity.enjoyment}</p> */}
-      <p> {props.activity.activities}</p>
+    <div className="Activity-card">
+      <p> {props.activity.outcomes}</p>
+      <p> {props.activity.date}</p>
       {props.activity.activities.map(item => (
-        <p> {item.enjoyment}</p>
+        <>
+          <p> {item.name}</p>
+          <p> {item.enjoyment}</p>
+        </>
       ))}
-      {/* <p> {props.activity.outcomes}</p>
-      <p> {props.activity.engagement}</p> */}
+      {/* <p> {props.activity.engagement}</p> */}
     </div>
   );
 };

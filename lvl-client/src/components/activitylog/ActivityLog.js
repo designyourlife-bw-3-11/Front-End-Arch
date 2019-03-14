@@ -28,11 +28,15 @@ class activityLog extends Component {
     logDate: "",
     outcomes: "",
     engagement: "",
-    logActivity: ""
+    logActivity: "",
+    activityLog: []
   };
 
   componentDidMount = () => {
-    this.setState({ activities: this.props.activities });
+    this.setState({
+      activities: this.props.activities,
+      activityLog: this.props.activityLog
+    });
     console.log(this.props.activities);
   };
 
@@ -48,11 +52,11 @@ class activityLog extends Component {
     this.setState({ [name]: value });
   };
 
-  handleAddActivity = e => {
-    const { description, results, enjoyment } = this.state;
-    e.preventDefault();
-    this.props.addActivity({ description, results, enjoyment });
-  };
+  // handleAddActivityLog = e => {
+  //   const { description, results, enjoyment } = this.state;
+  //   e.preventDefault();
+  //   this.props.addActivityLog({ description, results, enjoyment });
+  // };
 
   submitHandler = e => {
     e.preventDefault();
@@ -73,8 +77,7 @@ class activityLog extends Component {
     // debugger;
     const logData = {
       outcomes,
-      date: new Date(logDate),
-      activities: [{ name: logActivity, enjoyment, engagement }]
+      date: new Date(logDate)
     };
     // debugger;
     this.props.addActivityLog(logData);

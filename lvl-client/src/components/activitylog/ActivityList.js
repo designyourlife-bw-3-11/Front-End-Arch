@@ -1,5 +1,5 @@
 import React from "react";
-
+import { connect } from "react-redux";
 import Activity from "./Activity";
 
 class ActivityList extends React.Component {
@@ -16,4 +16,7 @@ class ActivityList extends React.Component {
   }
 }
 
-export default ActivityList;
+export default connect(
+  null,
+  {}
+)(ActivityList);

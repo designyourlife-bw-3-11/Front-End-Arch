@@ -37,10 +37,12 @@ export const ADD_ACTIVITYLOG_FAILURE = "ADD_ACTIVITYLOG_FAILURE";
 export const DELETE_ACTIVITYLOG_REQUEST = "DELETE_ACTIVITY_REQUEST";
 export const DELETE_ACTIVITYLOG_SUCCESS = "DELETE_ACTIVITY_SUCCESS";
 export const DELETE_ACTIVITYLOG_FAILURE = "DELETE_ACTIVITY_FAILURE";
-//---- Get Reflections -----//
-export const GET_REFLECTION_START = "GET_REFLECTION_START";
-export const GET_REFLECTION_SUCCESS = "GET_REFLECTION_SUCCESS";
-export const GET_REFLECTION_FAILURE = "GET_REFLECTION_FAILURE";
+
+//---- Get ReflectionLog -----//
+export const GET_REFLECTIONLOG_START = "GET_REFLECTION_START";
+export const GET_REFLECTIONLOG_SUCCESS = "GET_REFLECTION_SUCCESS";
+export const GET_REFLECTIONLOG_FAILURE = "GET_REFLECTION_FAILURE";
+
 //----- Reflection-----//
 export const ADD_REFLECTION_START = "ADD_REFLECTION_START";
 export const ADD_REFLECTION_SUCCESS = "ADD_REFLECTION_SUCCESS";
@@ -126,12 +128,14 @@ export const getActivities = (user, id) => dispatch => {
     });
 };
 
-//----- Gte Activity Log-----//
+//----- Get Activity Log-----//
 
-export const getActivityLog = () => dispatch => {
+export const getActivityLog = user => dispatch => {
   dispatch({ type: GET_ACTIVITYLOG_START });
   axios
-    .get(`https://bw-designyourlife-api.herokuapp.com/api/activities/user`)
+    .get(
+      `https://bw-designyourlife-api.herokuapp.com/api/activity-logs/${user}`
+    )
     .then(res => {
       dispatch({
         type: GET_ACTIVITYLOG_SUCCESS,
@@ -146,28 +150,6 @@ export const getActivityLog = () => dispatch => {
       });
     });
 };
-
-//----- Add Activity Action-----//
-
-// export const addActivity = newActivity => dispatch => {
-//   dispatch({ type: ADD_ACTIVITY_START });
-//   axios
-//     .post(
-//       "https://bw-designyourlife-api.herokuapp.com/api/activity-logs/user/id"
-//     )
-//     .then(res => {
-//       dispatch({
-//         type: ADD_ACTIVITY_SUCCESS,
-//         payload: newActivity
-//       });
-//     })
-//     .catch(err => {
-//       dispatch({
-//         type: ADD_ACTIVITY_FAILURE,
-//         error: err.response
-//       });
-//     });
-// };
 
 //----- Add Activity Log-----//
 
@@ -201,7 +183,7 @@ export const deleteActivityLog = id => dispatch => {
   dispatch({ type: DELETE_ACTIVITYLOG_REQUEST });
   axios
     .delete(
-      "https://bw-designyourlife-api.herokuapp.com/api/activity-logs/user"
+      `https://bw-designyourlife-api.herokuapp.com/api/activity-logs/user/${id}`
     )
     .then(res => {
       dispatch({
@@ -218,21 +200,21 @@ export const deleteActivityLog = id => dispatch => {
 
 //----- Get Reflections Action ----//
 
-export const getReflections = id => dispatch => {
-  dispatch({ type: GET_REFLECTION_START });
+export const getReflectionLog = id => dispatch => {
+  dispatch({ type: GET_REFLECTIONLOG_START });
   axios
     .get(
       `https://bw-designyourlife-api.herokuapp.com/api/reflection-logs/user/${id}`
     )
     .then(res => {
       dispatch({
-        type: GET_REFLECTION_SUCCESS,
+        type: GET_REFLECTIONLOG_SUCCESS,
         payload: res.data
       });
     })
     .catch(err => {
       dispatch({
-        type: GET_REFLECTION_FAILURE,
+        type: GET_REFLECTIONLOG_FAILURE,
         payload: err.response
       });
     });
@@ -261,8 +243,26 @@ export const addReflectionLog = newReflection => dispatch => {
     });
 };
 
-// //----- Add Reflection Log Action -----//
-// export const addReflectionLog = newReflection => dispatch => {
-//   dispatch({ type: ADD_REFLECTIONLOG_START });
-//   console.log(newReflection);
+//----------------------- Use For Later---------------//
+
+//----- Add Activity Action-----//
+
+// export const addActivity = newActivity => dispatch => {
+//   dispatch({ type: ADD_ACTIVITY_START });
+//   axios
+//     .post(
+//       "https://bw-designyourlife-api.herokuapp.com/api/activity-logs/user/id"
+//     )
+//     .then(res => {
+//       dispatch({
+//         type: ADD_ACTIVITY_SUCCESS,
+//         payload: newActivity
+//       });
+//     })
+//     .catch(err => {
+//       dispatch({
+//         type: ADD_ACTIVITY_FAILURE,
+//         error: err.response
+//       });
+//     });
 // };
